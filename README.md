@@ -1,2 +1,2 @@
 0x16. C - Simple Shell team project
-DagnachewA collaboration with Kimathi
+DagnachewA collaboration with Kim
