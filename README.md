@@ -30,7 +30,6 @@ Handling the command seperator ;
 Handling && and || logical operators
 Handle variable replacements $? and $$
 Handle the comments #
-Support the history feature
 Support the file input
 Builtins
 Our shell has support for the following built-in commands:
@@ -42,7 +41,6 @@ setenv [var][value]	Set an environment variable and value. If the variable exist
 alias[name[='value]]	Reads aliases name
 unsetenv [var]	Remove an environment variable.
 cd [dir]	Change the directory.
-help [built-in]	Read documentation for a built-in.
 Installation : Getting HSH
 Clone the below repository and compile the files into an executable using the GCC compiler.
 
@@ -54,10 +52,6 @@ Create an executable by running the following command:
 gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 From there, type in the following command and press your enter button.
 ./hsh
-Final step: ENJOY!
-Example
-ls -la
-114757753-e50c2180-9d64-11eb-95ea-fb9bba776c8c
 
 Contributors :
 Dagnachew Amare
