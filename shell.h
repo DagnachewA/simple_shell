@@ -10,7 +10,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 #define BUFF_SIZE 1024
-#define PATH_COMMAND 3
 #define PROMPT "$ "
 /* error messages */
 #define EINVAL "Invalid argument"
