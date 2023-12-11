@@ -1,14 +1,14 @@
-#0x16. C - Simple Shell
+# 0x16. C - Simple Shell
 Group project Batch 20
 
-#Background Context
+# Background Context
 Write a simple UNIX command interpreter.
 
 Gates of Shell
 
 ^ “The Gates of Shell”, by Spencer Cheng, featuring Julien Barbier
 
-#Resources
+# Resources
 
 Unix shell
 
@@ -18,9 +18,10 @@ Ken Thompson
 
 Everything you need to know to start coding your own shell
 
-#man or help: sh (Run sh as well)
+# man or help: sh (Run sh as well)
 
-#Learning Objectives:
+# Learning Objectives:
+
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 Who designed and implemented the original Unix operating system
 Who wrote the first version of the UNIX shell
@@ -36,7 +37,9 @@ How does the shell use the PATH to find the programs
 How to execute another program with the execve system call
 How to suspend the execution of a process until one of its children terminates
 What is EOF / “end-of-file”?
-#Requirements
+
+# Requirements
+
 * General
 A README.md file, at the root of the folder of the project with the description of your project
 Code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
@@ -66,7 +69,9 @@ $ echo "qwerty" | ./hsh
 $ echo "qwerty" | ./././hsh
 ./././hsh: 1: qwerty: not found
 $
+
 # List of allowed functions and system calls
+
 access (man 2 access)
 chdir (man 2 chdir)
 close (man 2 close)
@@ -98,10 +103,13 @@ waitpid (man 2 waitpid)
 wait3 (man 2 wait3)
 wait4 (man 2 wait4)
 write (man 2 write)
+
 # Compilation
+
 Your shell will be compiled this way: *gcc -Wall -Werror -Wextra -pedantic -std=gnu89 .c -o hsh
 
 # Testing
+
 Your shell should work like this in interactive mode:
 
 $ ./hsh
@@ -123,7 +131,9 @@ $ cat test_ls_2 | ./hsh
 hsh main.c shell.c test_ls_2
 hsh main.c shell.c test_ls_2
 $
+
 # TASKS
+
 betty would be proud
 Write a beautiful code that passes the Betty checks
 Simple shell 0.1
@@ -148,14 +158,12 @@ Simple shell 0.2.1
 You are not allowed to use strtok
 Simple shell 0.4.1
 handle arguments for the built-in exit
-# Usage: exit status, where status is an integer used to exit the shell
+Usage: exit status, where status is an integer used to exit the shell
 setenv, unsetenv
 Implement the setenv and unsetenv builtin commands
 setenv
-
-# Command syntax: setenv VARIABLE VALUE
+Command syntax: setenv VARIABLE VALUE
 unsetenv
-
 Command syntax: unsetenv VARIABLE
 cd
 Implement the builtin command cd
@@ -177,7 +185,8 @@ Handle comments (#)
 File as input
 Usage: simple_shell [filename]
 
-# Contributors: 
+# Contributors:
+
 * GitHub: 
 github.com/DagnachewA
 github.com/kimkelvin7
