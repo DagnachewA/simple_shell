@@ -1,5 +1,5 @@
 0x16. C - Simple Shell
-Group project
+Group project Batch 20
 
 Background Context
 Write a simple UNIX command interpreter.
@@ -175,4 +175,11 @@ Comments
 Handle comments (#)
 File as input
 Usage: simple_shell [filename]
-Contributors: GitHub: Dagnachew Amare; Kelvin Kimathi
+
+Contributors: 
+GitHub: 
+github.com/DagnachewA
+github.com/kimkelvin7
+Gmail:
+Kelvin Kimathi: kelvinkimm70@gmail.com
+Dagnachew Amare: wchegnada41@gmail.com
