@@ -7,7 +7,6 @@ int proc_file_commands(char *file_path, int *exe_ret);
  * cant_open - If the file doesn't exist or lacks proper permissions, print
  * a cant open error.
  * @file_path: Path to the supposed file.
- *
  * Return: 127.
  */
 
@@ -19,7 +18,6 @@ int cant_open(char *file_path)
 	hist_str = _itoa(hist);
 	if (!hist_str)
 		return (127);
-
 	len = _strlen(name) + _strlen(hist_str) + _strlen(file_path) + 16;
 	error = malloc(sizeof(char) * (len + 1));
 	if (!error)
@@ -27,14 +25,12 @@ int cant_open(char *file_path)
 		free(hist_str);
 		return (127);
 	}
-
 	_strcpy(error, name);
 	_strcat(error, ": ");
 	_strcat(error, hist_str);
 	_strcat(error, ": Can't open ");
 	_strcat(error, file_path);
 	_strcat(error, "\n");
-
 	free(hist_str);
 	write(STDERR_FILENO, error, len);
 	free(error);
@@ -46,11 +42,11 @@ int cant_open(char *file_path)
  * within.
  * @file_path: Path to the file.
  * @exe_ret: Return value of the last executed command.
- *
  * Return: If file couldn't be opened - 127.
  *	   If malloc fails - -1.
  *	   Otherwise the return value of the last command ran.
  */
+
 int proc_file_commands(char *file_path, int *exe_ret)
 {
 	ssize_t file, b_read, i;
@@ -68,12 +64,16 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		return (*exe_ret);
 	}
 	line = malloc(sizeof(char) * old_size);
+	line[0] = '\0';
 	if (!line)
 		return (-1);
 	do {
 		b_read = read(file, buffer, 119);
 		if (b_read == 0 && line_size == 0)
+		{
+			free(line);
 			return (*exe_ret);
+		}
 		buffer[b_read] = '\0';
 		line_size += b_read;
 		line = _realloc(line, old_size, line_size);
@@ -104,7 +104,6 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		return (*exe_ret);
 	}
 	front = args;
-
 	for (i = 0; args[i]; i++)
 	{
 		if (_strncmp(args[i], ";", 1) == 0)
@@ -116,9 +115,7 @@ int proc_file_commands(char *file_path, int *exe_ret)
 			i = 0;
 		}
 	}
-
 	ret = call_args(args, front, exe_ret);
-
 	free(front);
 	return (ret);
 }

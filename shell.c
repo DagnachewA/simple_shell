@@ -1,10 +1,50 @@
 #include "shell.h"
 
+char **_copyenv(void);
 void sig_handler(int sig);
 int execute(char **args, char **front);
 
+
+/**
+ * _copyenv - Creates a copy of the environment.
+ *
+ * Return: If an error occurs - NULL.
+ *         O/w - a double pointer to the new copy.
+ */
+char **_copyenv(void)
+{
+	char **new_environ;
+	size_t size;
+	int index;
+
+	for (size = 0; environ[size]; size++)
+		;
+
+	new_environ = malloc(sizeof(char *) * (size + 1));
+	if (!new_environ)
+		return (NULL);
+
+	for (index = 0; environ[index]; index++)
+	{
+		new_environ[index] = malloc(_strlen(environ[index]) + 1);
+
+		if (!new_environ[index])
+		{
+			for (index--; index >= 0; index--)
+				free(new_environ[index]);
+			free(new_environ);
+			return (NULL);
+		}
+		_strcpy(new_environ[index], environ[index]);
+	}
+	new_environ[index] = NULL;
+
+	return (new_environ);
+}
+
 /**
  * sig_handler - Prints a new prompt upon a signal.
+ * (handles ctrl c)
  * @sig: The signal.
  */
 void sig_handler(int sig)

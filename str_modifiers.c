@@ -4,6 +4,37 @@ char *_strchr(char *s, char c);
 int _strspn(char *s, char *accept);
 int _strcmp(char *s1, char *s2);
 int _strncmp(const char *s1, const char *s2, size_t n);
+int num_len(int num);
+
+/**
+ * num_len - Counts the digit length of a number.
+ * @num: The number to measure.
+ *
+ * Return: The digit length.
+ */
+
+int num_len(int num)
+{
+	unsigned int num1;
+	int len = 1;
+
+	if (num < 0)
+	{
+		len++;
+		num1 = num * -1;
+	}
+	else
+	{
+		num1 = num;
+	}
+	while (num1 > 9)
+	{
+		len++;
+		num1 /= 10;
+	}
+
+	return (len);
+}
 
 /**
  * _strchr - Locates a character in a string.
@@ -13,6 +44,7 @@ int _strncmp(const char *s1, const char *s2, size_t n);
  * Return: If c is found - a pointer to the first occurence.
  *         If c is not found - NULL.
  */
+
 char *_strchr(char *s, char c)
 {
 	int index;
@@ -34,6 +66,7 @@ char *_strchr(char *s, char c)
  * Return: The number of bytes in s which
  *         consist only of bytes from accept.
  */
+
 int _strspn(char *s, char *accept)
 {
 	int bytes = 0;
@@ -63,6 +96,7 @@ int _strspn(char *s, char *accept)
  *         0 if s1 = s2
  *         Negative byte difference if s1 < s2
  */
+
 int _strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
@@ -87,6 +121,7 @@ int _strcmp(char *s1, char *s2)
  *         0 if s1 and s2 match.
  *         Greater than 0 if s1 is longer than s2.
  */
+
 int _strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t i;

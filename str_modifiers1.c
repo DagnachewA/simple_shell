@@ -1,9 +1,49 @@
 #include "shell.h"
 
+char *_itoa(int num);
 int _strlen(const char *s);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 char *_strncat(char *dest, const char *src, size_t n);
+
+/**
+ * _itoa - Converts an integer to a string.
+ * @num: The integer.
+ *
+ * Return: The converted string.
+ */
+
+char *_itoa(int num)
+{
+	char *buffer;
+	int len = num_len(num);
+	unsigned int num1;
+
+	buffer = malloc(sizeof(char) * (len + 1));
+	if (!buffer)
+		return (NULL);
+
+	buffer[len] = '\0';
+
+	if (num < 0)
+	{
+		num1 = num * -1;
+		buffer[0] = '-';
+	}
+	else
+	{
+		num1 = num;
+	}
+
+	len--;
+	do {
+		buffer[len] = (num1 % 10) + '0';
+		num1 /= 10;
+		len--;
+	} while (num1 > 0);
+
+	return (buffer);
+}
 
 /**
  * _strlen - Returns the length of a string.
@@ -11,6 +51,7 @@ char *_strncat(char *dest, const char *src, size_t n);
  *
  * Return: The length of the character string.
  */
+
 int _strlen(const char *s)
 {
 	int length = 0;
@@ -30,6 +71,7 @@ int _strlen(const char *s)
  *
  * Return: Pointer to dest.
  */
+
 char *_strcpy(char *dest, const char *src)
 {
 	size_t i;
@@ -47,6 +89,7 @@ char *_strcpy(char *dest, const char *src)
  *
  * Return: Pointer to destination string.
  */
+
 char *_strcat(char *dest, const char *src)
 {
 	char *destTemp;
@@ -73,6 +116,7 @@ char *_strcat(char *dest, const char *src)
  *
  * Return: Pointer to destination string.
  */
+
 char *_strncat(char *dest, const char *src, size_t n)
 {
 	size_t dest_len = _strlen(dest);

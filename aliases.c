@@ -1,19 +1,19 @@
 #include "shell.h"
 
-int shellby_alias(char **args, char __attribute__((__unused__)) **front);
+int sh_alias(char **args, char __attribute__((__unused__)) **front);
 void set_alias(char *var_name, char *value);
 void print_alias(alias_t *alias);
+char **replace_aliases(char **args);
 
 /**
- * shellby_alias - Builtin command that either prints all aliases, specific
+ * sh_alias - Builtin command that either prints all aliases, specific
  * aliases, or sets an alias.
  * @args: Array of arguments.
  * @front: A double pointer to the beginning of args.
- *
  * Return: If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_alias(char **args, char __attribute__((__unused__)) **front)
+int sh_alias(char **args, char __attribute__((__unused__)) **front)
 {
 	alias_t *temp = aliases;
 	int i, ret = 0;
@@ -58,6 +58,7 @@ int shellby_alias(char **args, char __attribute__((__unused__)) **front)
  * @var_name: Name of the alias.
  * @value: Value of the alias. First character is a '='.
  */
+
 void set_alias(char *var_name, char *value)
 {
 	alias_t *temp = aliases;
@@ -94,6 +95,7 @@ void set_alias(char *var_name, char *value)
  * print_alias - Prints the alias in the format name='value'.
  * @alias: Pointer to an alias.
  */
+
 void print_alias(alias_t *alias)
 {
 	char *alias_string;
@@ -106,17 +108,17 @@ void print_alias(alias_t *alias)
 	_strcat(alias_string, "='");
 	_strcat(alias_string, alias->value);
 	_strcat(alias_string, "'\n");
-
 	write(STDOUT_FILENO, alias_string, len);
 	free(alias_string);
 }
+
 /**
  * replace_aliases - Goes through the arguments and replace any matching alias
  * with their value.
  * @args: 2D pointer to the arguments.
- *
  * Return: 2D pointer to the arguments.
  */
+
 char **replace_aliases(char **args)
 {
 	alias_t *temp;
@@ -147,6 +149,5 @@ char **replace_aliases(char **args)
 			temp = temp->next;
 		}
 	}
-
 	return (args);
 }

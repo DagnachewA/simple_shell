@@ -1,28 +1,31 @@
 #include "shell.h"
+
 int (*get_builtin(char *command))(char **args, char **front);
-int shellby_exit(char **args, char **front);
-int shellby_cd(char **args, char __attribute__((__unused__)) **front);
-int shellby_help(char **args, char __attribute__((__unused__)) **front);
+int sh_exit(char **args, char **front);
+int sh_cd(char **args, char __attribute__((__unused__)) **front);
+int sh_help(char **args, char __attribute__((__unused__)) **front);
 
 /**
  * get_builtin - Matches a command with a corresponding
- *               shellby builtin function.
+ *               sh builtin function.
  * @command: The command to match.
- *
  * Return: A function pointer to the corresponding builtin.
  */
+
 int (*get_builtin(char *command))(char **args, char **front)
 {
 	builtin_t funcs[] = {
-		{ "exit", shellby_exit },
-		{ "env", shellby_env },
-		{ "setenv", shellby_setenv },
-		{ "unsetenv", shellby_unsetenv },
-		{ "cd", shellby_cd },
-		{ "alias", shellby_alias },
-		{ "help", shellby_help },
+		{ "exit", sh_exit },
+		{ "env", sh_env },
+		{ "setenv", sh_setenv },
+		{ "unsetenv", sh_unsetenv },
+		{ "cd", sh_cd },
+		{ "alias", sh_alias },
+		{ "help", sh_help },
+		{ "history", NULL },
 		{ NULL, NULL }
 	};
+
 	int i;
 
 	for (i = 0; funcs[i].name; i++)
@@ -34,32 +37,31 @@ int (*get_builtin(char *command))(char **args, char **front)
 }
 
 /**
- * shellby_exit - Causes normal process termination
- *                for the shellby shell.
+ * sh_exit - Causes normal process termination
+ *                for the sh shell.
  * @args: An array of arguments containing the exit value.
  * @front: A double pointer to the beginning of args.
- *
  * Return: If there are no arguments - -3.
  *         If the given exit value is invalid - 2.
  *         O/w - exits with the given status value.
- *
  * Description: Upon returning -3, the program exits back in the main function.
  */
-int shellby_exit(char **args, char **front)
+
+int sh_exit(char **args, char **front)
 {
-	int i, len_of_int = 10;
+	int i = 0, len_of_int = 10;
 	unsigned int num = 0, max = 1 << (sizeof(int) * 8 - 1);
 
 	if (args[0])
 	{
 		if (args[0][0] == '+')
 		{
-			i = 1;
+			i += 1;
 			len_of_int++;
 		}
 		for (; args[0][i]; i++)
 		{
-			if (i <= len_of_int && args[0][i] >= '0' && args[0][i] <= '9')
+			if (i <= len_of_int && (args[0][i] >= '0' && args[0][i] <= '9'))
 				num = (num * 10) + (args[0][i] - '0');
 			else
 				return (create_error(--args, 2));
@@ -79,15 +81,15 @@ int shellby_exit(char **args, char **front)
 }
 
 /**
- * shellby_cd - Changes the current directory of the shellby process.
+ * sh_cd - Changes the current directory of the sh process.
  * @args: An array of arguments.
  * @front: A double pointer to the beginning of args.
- *
  * Return: If the given string is not a directory - 2.
  *         If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_cd(char **args, char __attribute__((__unused__)) **front)
+
+int sh_cd(char **args, char __attribute__((__unused__)) **front)
 {
 	char **dir_info, *new_line = "\n";
 	char *oldpwd = NULL, *pwd = NULL;
@@ -96,7 +98,6 @@ int shellby_cd(char **args, char __attribute__((__unused__)) **front)
 	oldpwd = getcwd(oldpwd, 0);
 	if (!oldpwd)
 		return (-1);
-
 	if (args[0])
 	{
 		if (*(args[0]) == '-' || _strcmp(args[0], "--") == 0)
@@ -130,23 +131,19 @@ int shellby_cd(char **args, char __attribute__((__unused__)) **front)
 		if (_getenv("HOME") != NULL)
 			chdir(*(_getenv("HOME")) + 5);
 	}
-
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
 		return (-1);
-
 	dir_info = malloc(sizeof(char *) * 2);
 	if (!dir_info)
 		return (-1);
-
 	dir_info[0] = "OLDPWD";
 	dir_info[1] = oldpwd;
-	if (shellby_setenv(dir_info, dir_info) == -1)
+	if (sh_setenv(dir_info, dir_info) == -1)
 		return (-1);
-
 	dir_info[0] = "PWD";
 	dir_info[1] = pwd;
-	if (shellby_setenv(dir_info, dir_info) == -1)
+	if (sh_setenv(dir_info, dir_info) == -1)
 		return (-1);
 	if (args[0] && args[0][0] == '-' && args[0][1] != '-')
 	{
@@ -160,14 +157,14 @@ int shellby_cd(char **args, char __attribute__((__unused__)) **front)
 }
 
 /**
- * shellby_help - Displays information about shellby builtin commands.
+ * sh_help - Displays information about sh builtin commands.
  * @args: An array of arguments.
  * @front: A pointer to the beginning of args.
- *
  * Return: If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_help(char **args, char __attribute__((__unused__)) **front)
+
+int sh_help(char **args, char __attribute__((__unused__)) **front)
 {
 	if (!args[0])
 		help_all();
@@ -187,6 +184,5 @@ int shellby_help(char **args, char __attribute__((__unused__)) **front)
 		help_help();
 	else
 		write(STDERR_FILENO, name, _strlen(name));
-
 	return (0);
 }
