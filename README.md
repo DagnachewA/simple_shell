@@ -2,7 +2,7 @@
 * Group project Batch 20
 
 # Background Context
-Write a simple UNIX command interpreter.
+* Write a simple UNIX command interpreter.
 
 * Gates of Shell
 
